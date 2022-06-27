@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 
 
 namespace Paint
 {
+    
     public partial class Paint : Form
     {
         Point Start, End;
+        int height = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height;
+        int width = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width;
         public Paint()
         {
             InitializeComponent();
 
             DoubleBuffered = true;
-            this.Width = 800;
-            this.Height = 550;
+            this.Width = 900;
+            this.Height = 800;
             bm = new Bitmap(picBox.Width, picBox.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
@@ -41,17 +47,6 @@ namespace Paint
 
         public Image OpenedFile { get; private set; }
 
-        private void Paint_Resize(object sender, EventArgs e)
-        {
-            Control control = (Control)sender;
-
-            
-            if (control.Size.Height != control.Size.Width)
-            {
-                control.Size = new Size(control.Size.Width, control.Size.Width);
-            }
-
-        }
         private void btn_pencil_Click(object sender, EventArgs e)
         {
             index = 1;
@@ -150,7 +145,7 @@ namespace Paint
 
         private void Paint_Load(object sender, EventArgs e)
         {
-           
+            picBox.SizeMode = PictureBoxSizeMode.Normal;
         }
 
         private void picBox_MouseMove(object sender, MouseEventArgs e)
@@ -199,10 +194,14 @@ namespace Paint
             pic_color.BackColor = cd.Color;
             p.Color = cd.Color;
         }
+
+       
+
         private void btn_clear_Click(object sender, EventArgs e)
         {
             g.Clear(Color.White);
             picBox.Image = bm;
+            picBox.SizeMode = PictureBoxSizeMode.Normal;
             index = 0;
             Invalidate();
         }
@@ -249,16 +248,18 @@ namespace Paint
         }
         private void btn_open_Click(object sender, EventArgs e)
         {
+            
             OpenFileDialog Op = new OpenFileDialog();
             DialogResult dr = Op.ShowDialog();
             if (dr == DialogResult.OK)
             {
                 OpenedFile = Image.FromFile(Op.FileName);
                 picBox.Image = OpenedFile;
+                picBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 Invalidate();
             }
-
         }
+
         private void PaintBrushSize_ValueChanged(object sender, EventArgs e)
         {
             p.Width = (float)PaintBrushSize.Value;
