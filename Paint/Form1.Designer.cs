@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Paint));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnTriangle = new System.Windows.Forms.Button();
             this.btn_open = new System.Windows.Forms.Button();
             this.lbCordinates = new System.Windows.Forms.Label();
             this.btn_save = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel1.Controls.Add(this.btnTriangle);
             this.panel1.Controls.Add(this.btn_open);
             this.panel1.Controls.Add(this.lbCordinates);
             this.panel1.Controls.Add(this.btn_save);
@@ -70,6 +72,25 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(784, 79);
             this.panel1.TabIndex = 0;
+            // 
+            // btnTriangle
+            // 
+            this.btnTriangle.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.btnTriangle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnTriangle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTriangle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTriangle.ForeColor = System.Drawing.Color.White;
+            this.btnTriangle.Image = global::Paint.Properties.Resources.line_48_44715;
+            this.btnTriangle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnTriangle.Location = new System.Drawing.Point(718, 9);
+            this.btnTriangle.Name = "btnTriangle";
+            this.btnTriangle.Size = new System.Drawing.Size(66, 61);
+            this.btnTriangle.TabIndex = 10;
+            this.btnTriangle.Text = "Line";
+            this.btnTriangle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnTriangle.UseVisualStyleBackColor = false;
+            this.btnTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
             // 
             // btn_open
             // 
@@ -98,7 +119,6 @@
             this.lbCordinates.TabIndex = 12;
             this.lbCordinates.Text = "Cordinates";
             this.lbCordinates.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbCordinates.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lbCordinates_MouseMove);
             // 
             // btn_save
             // 
@@ -344,6 +364,7 @@
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Label lbCordinates;
         private System.Windows.Forms.Button btn_open;
+        private System.Windows.Forms.Button btnTriangle;
     }
 }
 
