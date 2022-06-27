@@ -9,3 +9,14 @@ C:\Users\user\source\repos\Paint\Paint\obj\Debug\Paint.csproj.CoreCompileInputs.
 C:\Users\user\source\repos\Paint\Paint\obj\Debug\Paint.exe
 C:\Users\user\source\repos\Paint\Paint\obj\Debug\Paint.pdb
 C:\Users\user\source\repos\Paint\Paint\obj\Debug\Paint.Paint.resources
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\bin\Debug\Paint.exe.config
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\bin\Debug\Paint.exe
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\bin\Debug\Paint.pdb
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.csproj.AssemblyReference.cache
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.csproj.SuggestedBindingRedirects.cache
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.Paint.resources
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.Properties.Resources.resources
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.csproj.GenerateResource.cache
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.csproj.CoreCompileInputs.cache
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.exe
+C:\Users\Home\Desktop\FINKI\4 Semestar\Vizuelno Programiranje\Project\Paint\obj\Debug\Paint.pdb
