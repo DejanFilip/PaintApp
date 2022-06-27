@@ -30,12 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Paint));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnTriangle = new System.Windows.Forms.Button();
             this.btn_open = new System.Windows.Forms.Button();
             this.lbCordinates = new System.Windows.Forms.Label();
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.PaintBrushSize = new System.Windows.Forms.NumericUpDown();
+            this.pic_color = new System.Windows.Forms.Button();
+            this.picBox = new System.Windows.Forms.PictureBox();
+            this.btnTriangle = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
             this.btn_rectangle = new System.Windows.Forms.Button();
             this.btn_ellipse = new System.Windows.Forms.Button();
@@ -43,8 +45,6 @@
             this.btn_pencil = new System.Windows.Forms.Button();
             this.btn_fill = new System.Windows.Forms.Button();
             this.btn_color = new System.Windows.Forms.Button();
-            this.pic_color = new System.Windows.Forms.Button();
-            this.picBox = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PaintBrushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -73,25 +73,6 @@
             this.panel1.Size = new System.Drawing.Size(784, 79);
             this.panel1.TabIndex = 0;
             // 
-            // btnTriangle
-            // 
-            this.btnTriangle.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.btnTriangle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnTriangle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.btnTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTriangle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTriangle.ForeColor = System.Drawing.Color.White;
-            this.btnTriangle.Image = global::Paint.Properties.Resources.line_48_44715;
-            this.btnTriangle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnTriangle.Location = new System.Drawing.Point(718, 9);
-            this.btnTriangle.Name = "btnTriangle";
-            this.btnTriangle.Size = new System.Drawing.Size(66, 61);
-            this.btnTriangle.TabIndex = 10;
-            this.btnTriangle.Text = "Line";
-            this.btnTriangle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnTriangle.UseVisualStyleBackColor = false;
-            this.btnTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
-            // 
             // btn_open
             // 
             this.btn_open.BackColor = System.Drawing.Color.Gray;
@@ -113,7 +94,7 @@
             // lbCordinates
             // 
             this.lbCordinates.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lbCordinates.Location = new System.Drawing.Point(649, 12);
+            this.lbCordinates.Location = new System.Drawing.Point(721, 12);
             this.lbCordinates.Name = "lbCordinates";
             this.lbCordinates.Size = new System.Drawing.Size(60, 55);
             this.lbCordinates.TabIndex = 12;
@@ -129,7 +110,7 @@
             this.btn_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_save.ForeColor = System.Drawing.Color.Black;
             this.btn_save.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_save.Location = new System.Drawing.Point(588, 41);
+            this.btn_save.Location = new System.Drawing.Point(663, 41);
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(55, 26);
             this.btn_save.TabIndex = 11;
@@ -147,7 +128,7 @@
             this.btn_clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_clear.ForeColor = System.Drawing.Color.Black;
             this.btn_clear.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_clear.Location = new System.Drawing.Point(588, 12);
+            this.btn_clear.Location = new System.Drawing.Point(663, 12);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(55, 26);
             this.btn_clear.TabIndex = 10;
@@ -168,6 +149,49 @@
             this.PaintBrushSize.Size = new System.Drawing.Size(86, 20);
             this.PaintBrushSize.TabIndex = 2;
             this.PaintBrushSize.ValueChanged += new System.EventHandler(this.PaintBrushSize_ValueChanged);
+            // 
+            // pic_color
+            // 
+            this.pic_color.BackColor = System.Drawing.Color.White;
+            this.pic_color.Location = new System.Drawing.Point(67, 38);
+            this.pic_color.Name = "pic_color";
+            this.pic_color.Size = new System.Drawing.Size(34, 29);
+            this.pic_color.TabIndex = 2;
+            this.pic_color.UseVisualStyleBackColor = false;
+            // 
+            // picBox
+            // 
+            this.picBox.BackColor = System.Drawing.Color.White;
+            this.picBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picBox.Location = new System.Drawing.Point(0, 0);
+            this.picBox.Name = "picBox";
+            this.picBox.Size = new System.Drawing.Size(784, 432);
+            this.picBox.TabIndex = 1;
+            this.picBox.TabStop = false;
+            this.picBox.Paint += new System.Windows.Forms.PaintEventHandler(this.picBox_Paint);
+            this.picBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseClick);
+            this.picBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseDown);
+            this.picBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseMove);
+            this.picBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseUp);
+            // 
+            // btnTriangle
+            // 
+            this.btnTriangle.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.btnTriangle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnTriangle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTriangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTriangle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTriangle.ForeColor = System.Drawing.Color.White;
+            this.btnTriangle.Image = global::Paint.Properties.Resources.triangle_shape_icon_icons_com_53860;
+            this.btnTriangle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnTriangle.Location = new System.Drawing.Point(588, 9);
+            this.btnTriangle.Name = "btnTriangle";
+            this.btnTriangle.Size = new System.Drawing.Size(69, 61);
+            this.btnTriangle.TabIndex = 10;
+            this.btnTriangle.Text = "Triangle";
+            this.btnTriangle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnTriangle.UseVisualStyleBackColor = false;
+            this.btnTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
             // 
             // btn_line
             // 
@@ -301,30 +325,6 @@
             this.btn_color.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_color.UseVisualStyleBackColor = false;
             this.btn_color.Click += new System.EventHandler(this.btn_color_Click);
-            // 
-            // pic_color
-            // 
-            this.pic_color.BackColor = System.Drawing.Color.White;
-            this.pic_color.Location = new System.Drawing.Point(67, 38);
-            this.pic_color.Name = "pic_color";
-            this.pic_color.Size = new System.Drawing.Size(34, 29);
-            this.pic_color.TabIndex = 2;
-            this.pic_color.UseVisualStyleBackColor = false;
-            // 
-            // picBox
-            // 
-            this.picBox.BackColor = System.Drawing.Color.White;
-            this.picBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picBox.Location = new System.Drawing.Point(0, 0);
-            this.picBox.Name = "picBox";
-            this.picBox.Size = new System.Drawing.Size(784, 432);
-            this.picBox.TabIndex = 1;
-            this.picBox.TabStop = false;
-            this.picBox.Paint += new System.Windows.Forms.PaintEventHandler(this.picBox_Paint);
-            this.picBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseClick);
-            this.picBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseDown);
-            this.picBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseMove);
-            this.picBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox_MouseUp);
             // 
             // Paint
             // 

@@ -159,5 +159,15 @@ namespace Paint.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap triangle_shape_icon_icons_com_53860 {
+            get {
+                object obj = ResourceManager.GetObject("triangle-shape_icon-icons.com_53860", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -110,5 +110,8 @@
   <ItemGroup>
     <None Include="Resources\line-48_44715.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\triangle-shape_icon-icons.com_53860.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
