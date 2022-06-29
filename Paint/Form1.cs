@@ -38,9 +38,10 @@ namespace Paint
             bm = new Bitmap(width, height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
-            picBox.Image = bm;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            picBox.Image = bm;
             p.Width = (float)PaintBrushSize.Value;
+            p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round ,System.Drawing.Drawing2D.DashCap.Round);
         }
 
         private void btn_pencil_Click(object sender, EventArgs e)
