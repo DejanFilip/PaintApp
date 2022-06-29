@@ -313,8 +313,10 @@
             // 
             // picBox
             // 
+            this.picBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.picBox.BackColor = System.Drawing.Color.White;
-            this.picBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picBox.Location = new System.Drawing.Point(0, 0);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(784, 432);
@@ -331,6 +333,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(784, 511);
             this.Controls.Add(this.picBox);
             this.Controls.Add(this.panel1);
@@ -340,6 +343,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PaintApp";
             this.Load += new System.EventHandler(this.Paint_Load);
+            this.Resize += new System.EventHandler(this.Paint_Resize);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PaintBrushSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();

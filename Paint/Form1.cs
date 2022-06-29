@@ -20,10 +20,10 @@ namespace Paint
         public Paint()
         {
             InitializeComponent();
-
+            StartPosition = FormStartPosition.CenterScreen;
             DoubleBuffered = true;
-            this.Width = 900;
             this.Height = 800;
+            this.Width = 1200;
             bm = new Bitmap(picBox.Width, picBox.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
@@ -31,14 +31,14 @@ namespace Paint
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             p.Width = (float)PaintBrushSize.Value;
         }
-        public event EventHandler Resize;
+        
 
         Bitmap bm;
         Graphics g;
         bool painting = false;
         Point dx, dy;
         Pen p = new Pen(Color.Black, 1);
-        Pen erase = new Pen(Color.White,10);
+        Pen erase = new Pen(Color.White,30);
         int index;
         int x, y, sX, sY, cX, cY;
 
@@ -80,8 +80,6 @@ namespace Paint
 
         private void picBox_Paint(object sender, PaintEventArgs e)
         {
-            Pen dashed = new Pen(new_color);
-            dashed.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             Graphics g = e.Graphics;
             if (painting)
             {
@@ -99,6 +97,10 @@ namespace Paint
                 {
                     g.DrawLine(p, cX, cY, x, y);
 
+                }
+                if (index == 8)
+                {
+                    DrawTriangle(g);
                 }
             }
         }
@@ -139,7 +141,7 @@ namespace Paint
             }
             if(index == 8)
             {
-                DrawTriangle();
+                DrawTriangle(g);
             }
         }
 
@@ -195,7 +197,10 @@ namespace Paint
             p.Color = cd.Color;
         }
 
-       
+        private void Paint_Resize(object sender, EventArgs e)
+        { 
+
+        }
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
@@ -205,6 +210,7 @@ namespace Paint
             index = 0;
             Invalidate();
         }
+
         private void validate(Bitmap bm,Stack<Point>sp,int x,int y,Color old_color,Color new_color)
         {
             Color cx = bm.GetPixel(x, y);
@@ -264,7 +270,7 @@ namespace Paint
         {
             p.Width = (float)PaintBrushSize.Value;
         }
-        private void DrawTriangle()
+        private void DrawTriangle(Graphics g)
         {
             End = PointToClient(MousePosition);
             double xMid = (Start.X + End.X) / 2;
@@ -274,6 +280,6 @@ namespace Paint
             g.DrawLine(p, first, End);
             g.DrawLine(p, End, mid);
         }
-     
+
     }
 }
