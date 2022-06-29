@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Paint
@@ -14,8 +11,8 @@ namespace Paint
     public partial class Paint : Form
     {
         private Point Start, End;
-        private int height = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height;
-        private int width = System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width;
+        private int height = SystemInformation.PrimaryMonitorSize.Height;
+        private int width = SystemInformation.PrimaryMonitorSize.Width;
         private Bitmap bm;
         private Graphics g;
         private bool painting = false;
@@ -24,12 +21,8 @@ namespace Paint
         private Pen erase = new Pen(Color.White, 30);
         private int index;
         private int x, y, sX, sY, cX, cY;
-
         private ColorDialog cd = new ColorDialog();
         private Color new_color;
-
-        public Image OpenedFile { get; private set; }
-
         public Paint()
         {
             InitializeComponent();
@@ -43,7 +36,10 @@ namespace Paint
             p.Width = (float)PaintBrushSize.Value;
             p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round ,System.Drawing.Drawing2D.DashCap.Round);
         }
-
+        private void Paint_Load(object sender, EventArgs e)
+        {
+            picBox.SizeMode = PictureBoxSizeMode.Normal;
+        }
         private void btn_pencil_Click(object sender, EventArgs e)
         {
             index = 1;
@@ -142,10 +138,7 @@ namespace Paint
             }
         }
 
-        private void Paint_Load(object sender, EventArgs e)
-        {
-            picBox.SizeMode = PictureBoxSizeMode.Normal;
-        }
+       
 
         private void picBox_MouseMove(object sender, MouseEventArgs e)
         {
@@ -186,7 +179,14 @@ namespace Paint
             }
         }
 
-      
+        private void pic_color_Click(object sender, EventArgs e)
+        {
+            cd.ShowDialog();
+            new_color = cd.Color;
+            pic_color.BackColor = cd.Color;
+            p.Color = cd.Color;
+        }
+
         private void btn_color_Click(object sender, EventArgs e)
         {
             cd.ShowDialog();
@@ -202,17 +202,6 @@ namespace Paint
             picBox.SizeMode = PictureBoxSizeMode.Normal;
             index = 0;
             Invalidate();
-        }
-
-        private void validate(Bitmap bm,Stack<Point>sp,int x,int y,Color old_color,Color new_color)
-        {
-            Color cx = bm.GetPixel(x, y);
-            if (cx == old_color)
-            {
-                sp.Push(new Point(x, y));
-                bm.SetPixel(x, y, new_color);
-                
-            }
         }
 
         void FloodFill(Bitmap bitmap, int x, int y, Color color)
@@ -282,7 +271,6 @@ namespace Paint
                
             }
         }
-
         private void PaintBrushSize_ValueChanged(object sender, EventArgs e)
         {
             p.Width = (float)PaintBrushSize.Value;
