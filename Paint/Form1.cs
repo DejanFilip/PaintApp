@@ -3,54 +3,42 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-
-
+using System.Runtime.InteropServices;
 
 namespace Paint
 {
+    
     public partial class Paint : Form
     {
-        Point Start, End;
+        private Point Start, End;
+        private int height = SystemInformation.PrimaryMonitorSize.Height;
+        private int width = SystemInformation.PrimaryMonitorSize.Width;
+        private Bitmap bm;
+        private Graphics g;
+        private bool painting = false;
+        private Point dx, dy;
+        private Pen p = new Pen(Color.Black, 1);
+        private Pen erase = new Pen(Color.White, 30);
+        private int index;
+        private int x, y, sX, sY, cX, cY;
+        private ColorDialog cd = new ColorDialog();
+        private Color new_color;
         public Paint()
         {
             InitializeComponent();
-
+            StartPosition = FormStartPosition.CenterScreen;
             DoubleBuffered = true;
-            this.Width = 800;
-            this.Height = 550;
-            bm = new Bitmap(picBox.Width, picBox.Height);
+            bm = new Bitmap(width, height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
-            picBox.Image = bm;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            picBox.Image = bm;
             p.Width = (float)PaintBrushSize.Value;
+            p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round ,System.Drawing.Drawing2D.DashCap.Round);
         }
-        public event EventHandler Resize;
-
-        Bitmap bm;
-        Graphics g;
-        bool painting = false;
-        Point dx, dy;
-        Pen p = new Pen(Color.Black, 1);
-        Pen erase = new Pen(Color.White,10);
-        int index;
-        int x, y, sX, sY, cX, cY;
-
-        ColorDialog cd = new ColorDialog();
-        Color new_color;
-
-        public Image OpenedFile { get; private set; }
-
-        private void Paint_Resize(object sender, EventArgs e)
+        private void Paint_Load(object sender, EventArgs e)
         {
-            Control control = (Control)sender;
-
-            
-            if (control.Size.Height != control.Size.Width)
-            {
-                control.Size = new Size(control.Size.Width, control.Size.Width);
-            }
-
+            picBox.SizeMode = PictureBoxSizeMode.Normal;
         }
         private void btn_pencil_Click(object sender, EventArgs e)
         {
@@ -85,8 +73,6 @@ namespace Paint
 
         private void picBox_Paint(object sender, PaintEventArgs e)
         {
-            Pen dashed = new Pen(new_color);
-            dashed.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             Graphics g = e.Graphics;
             if (painting)
             {
@@ -104,6 +90,10 @@ namespace Paint
                 {
                     g.DrawLine(p, cX, cY, x, y);
 
+                }
+                if (index == 8)
+                {
+                    DrawTriangle(g);
                 }
             }
         }
@@ -144,14 +134,11 @@ namespace Paint
             }
             if(index == 8)
             {
-                DrawTriangle();
+                DrawTriangle(g);
             }
         }
 
-        private void Paint_Load(object sender, EventArgs e)
-        {
-           
-        }
+       
 
         private void picBox_MouseMove(object sender, MouseEventArgs e)
         {
@@ -186,12 +173,20 @@ namespace Paint
         {
             if (index == 7)
             {
-                Fill(bm, e.X, e.Y, new_color);
+                FloodFill(bm, e.X, e.Y, new_color);
+                Invalidate();
 
             }
         }
 
-      
+        private void pic_color_Click(object sender, EventArgs e)
+        {
+            cd.ShowDialog();
+            new_color = cd.Color;
+            pic_color.BackColor = cd.Color;
+            p.Color = cd.Color;
+        }
+
         private void btn_color_Click(object sender, EventArgs e)
         {
             cd.ShowDialog();
@@ -199,43 +194,58 @@ namespace Paint
             pic_color.BackColor = cd.Color;
             p.Color = cd.Color;
         }
+
         private void btn_clear_Click(object sender, EventArgs e)
         {
             g.Clear(Color.White);
             picBox.Image = bm;
+            picBox.SizeMode = PictureBoxSizeMode.Normal;
             index = 0;
             Invalidate();
         }
-        private void validate(Bitmap bm,Stack<Point>sp,int x,int y,Color old_color,Color new_color)
-        {
-            Color cx = bm.GetPixel(x, y);
-            if (cx == old_color)
-            {
-                sp.Push(new Point(x, y));
-                bm.SetPixel(x, y, new_color);
-            }
-        }
-        
-        public void Fill(Bitmap bm,int x,int y,Color new_clr)
-        {
-            Color old_color = bm.GetPixel(x,y);
-            Stack<Point>pixel = new Stack<Point>();
-            pixel.Push(new Point(x,y));
-            bm.SetPixel(x,y,new_clr);
-            if (old_color == new_clr) return;
 
-            while(pixel.Count > 0)
+        void FloodFill(Bitmap bitmap, int x, int y, Color color)
+        {
+            BitmapData data = bitmap.LockBits(
+            new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            int[] bits = new int[data.Stride / 4 * data.Height];
+            Marshal.Copy(data.Scan0, bits, 0, bits.Length);
+
+            LinkedList<Point> check = new LinkedList<Point>();
+            int floodTo = color.ToArgb();
+            int floodFrom = bits[x + y * data.Stride / 4];
+            bits[x + y * data.Stride / 4] = floodTo;
+
+            if (floodFrom != floodTo)
             {
-                Point pt = (Point)pixel.Pop();
-                if (pt.X > 0 && pt.Y > 0 && pt.X < bm.Width - 1 && pt.Y < bm.Height - 1)
+                check.AddLast(new Point(x, y));
+                while (check.Count > 0)
                 {
-                    validate(bm, pixel, pt.X - 1, pt.Y, old_color, new_clr);
-                    validate(bm, pixel, pt.X, pt.Y-1, old_color, new_clr);
-                    validate(bm, pixel, pt.X + 1, pt.Y, old_color, new_clr);
-                    validate(bm, pixel, pt.X, pt.Y + 1, old_color, new_clr);
+                    Point cur = check.First.Value;
+                    check.RemoveFirst();
 
+                    foreach (Point off in new Point[] {
+                new Point(0, -1), new Point(0, 1),
+                new Point(-1, 0), new Point(1, 0)})
+                    {
+                        Point next = new Point(cur.X + off.X, cur.Y + off.Y);
+                        if (next.X >= 0 && next.Y >= 0 &&
+                            next.X < data.Width &&
+                            next.Y < data.Height)
+                        {
+                            if (bits[next.X + next.Y * data.Stride / 4] == floodFrom)
+                            {
+                                check.AddLast(next);
+                                bits[next.X + next.Y * data.Stride / 4] = floodTo;
+                            }
+                        }
+                    }
                 }
             }
+
+            Marshal.Copy(bits, 0, data.Scan0, bits.Length);
+            bitmap.UnlockBits(data);
         }
         private void btn_save_Click(object sender, EventArgs e)
         {
@@ -243,27 +253,29 @@ namespace Paint
             sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                Bitmap btm = bm.Clone(new Rectangle(0, 0, picBox.Width, picBox.Height), bm.PixelFormat);
+                Bitmap btm = bm.Clone(new Rectangle(0, 0, width, height), bm.PixelFormat);
                 btm.Save(sfd.FileName, ImageFormat.Jpeg);
             }
         }
         private void btn_open_Click(object sender, EventArgs e)
         {
+            
             OpenFileDialog Op = new OpenFileDialog();
             DialogResult dr = Op.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                OpenedFile = Image.FromFile(Op.FileName);
-                picBox.Image = OpenedFile;
-                Invalidate();
+                Image imageIn = Image.FromFile(Op.FileName);
+                bm = new Bitmap(imageIn, width, height);
+                g = Graphics.FromImage(bm);
+                picBox.Image = bm;
+               
             }
-
         }
         private void PaintBrushSize_ValueChanged(object sender, EventArgs e)
         {
             p.Width = (float)PaintBrushSize.Value;
         }
-        private void DrawTriangle()
+        private void DrawTriangle(Graphics g)
         {
             End = PointToClient(MousePosition);
             double xMid = (Start.X + End.X) / 2;
@@ -273,6 +285,6 @@ namespace Paint
             g.DrawLine(p, first, End);
             g.DrawLine(p, End, mid);
         }
-     
+
     }
 }
