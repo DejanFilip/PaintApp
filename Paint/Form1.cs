@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Paint
 {
-    
+
     public partial class Paint : Form
     {
         private Point Start, End;
@@ -26,15 +26,7 @@ namespace Paint
         public Paint()
         {
             InitializeComponent();
-            StartPosition = FormStartPosition.CenterScreen;
-            DoubleBuffered = true;
-            bm = new Bitmap(width, height);
-            g = Graphics.FromImage(bm);
-            g.Clear(Color.White);
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            picBox.Image = bm;
-            p.Width = (float)PaintBrushSize.Value;
-            p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round ,System.Drawing.Drawing2D.DashCap.Round);
+            Init();
         }
         private void Paint_Load(object sender, EventArgs e)
         {
@@ -69,7 +61,7 @@ namespace Paint
         {
             index = 8;
         }
-       
+
 
         private void picBox_Paint(object sender, PaintEventArgs e)
         {
@@ -104,7 +96,7 @@ namespace Paint
             dy = e.Location;
             cX = e.X;
             cY = e.Y;
-            if(e.Button== MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 Start = End = e.Location;
                 painting = true;
@@ -132,21 +124,21 @@ namespace Paint
                 g.DrawLine(p, cX, cY, x, y);
 
             }
-            if(index == 8)
+            if (index == 8)
             {
                 DrawTriangle(g);
             }
         }
 
-       
+
 
         private void picBox_MouseMove(object sender, MouseEventArgs e)
         {
-            lbCordinates.Text = "Cordinates"+"\n"+"X:" + e.X + "\n" + "Y:" + e.Y;
-            
+            lbCordinates.Text = "Cordinates" + "\n" + "X:" + e.X + "\n" + "Y:" + e.Y;
+
             if (painting)
             {
-                if(index == 1)
+                if (index == 1)
                 {
                     dx = e.Location;
                     g.DrawLine(p, dx, dy);
@@ -181,18 +173,12 @@ namespace Paint
 
         private void pic_color_Click(object sender, EventArgs e)
         {
-            cd.ShowDialog();
-            new_color = cd.Color;
-            pic_color.BackColor = cd.Color;
-            p.Color = cd.Color;
+            PickColor();
         }
 
         private void btn_color_Click(object sender, EventArgs e)
         {
-            cd.ShowDialog();
-            new_color = cd.Color;
-            pic_color.BackColor = cd.Color;
-            p.Color = cd.Color;
+            PickColor();
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
@@ -259,7 +245,7 @@ namespace Paint
         }
         private void btn_open_Click(object sender, EventArgs e)
         {
-            
+
             OpenFileDialog Op = new OpenFileDialog();
             DialogResult dr = Op.ShowDialog();
             if (dr == DialogResult.OK)
@@ -268,7 +254,7 @@ namespace Paint
                 bm = new Bitmap(imageIn, width, height);
                 g = Graphics.FromImage(bm);
                 picBox.Image = bm;
-               
+
             }
         }
         private void PaintBrushSize_ValueChanged(object sender, EventArgs e)
@@ -285,6 +271,24 @@ namespace Paint
             g.DrawLine(p, first, End);
             g.DrawLine(p, End, mid);
         }
-
+        private void Init()
+        {
+            StartPosition = FormStartPosition.CenterScreen;
+            DoubleBuffered = true;
+            bm = new Bitmap(width, height);
+            g = Graphics.FromImage(bm);
+            g.Clear(Color.White);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            picBox.Image = bm;
+            p.Width = (float)PaintBrushSize.Value;
+            p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+        }
+        private void PickColor()
+        {
+            cd.ShowDialog();
+            new_color = cd.Color;
+            pic_color.BackColor = cd.Color;
+            p.Color = cd.Color;
+        }
     }
 }
