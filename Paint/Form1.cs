@@ -35,6 +35,7 @@ namespace Paint
             picBox.Image = bm;
             p.Width = (float)PaintBrushSize.Value;
             p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round ,System.Drawing.Drawing2D.DashCap.Round);
+            erase.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
         }
         private void Paint_Load(object sender, EventArgs e)
         {
