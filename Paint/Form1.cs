@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -26,15 +27,7 @@ namespace Paint
         public Paint()
         {
             InitializeComponent();
-            StartPosition = FormStartPosition.CenterScreen;
-            DoubleBuffered = true;
-            bm = new Bitmap(width, height);
-            g = Graphics.FromImage(bm);
-            g.Clear(Color.White);
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            picBox.Image = bm;
-            p.Width = (float)PaintBrushSize.Value;
-            p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round ,System.Drawing.Drawing2D.DashCap.Round);
+            Init();
         }
         private void Paint_Load(object sender, EventArgs e)
         {
@@ -279,6 +272,25 @@ namespace Paint
             g.DrawLine(p, first, End);
             g.DrawLine(p, End, mid);
         }
-
+        private void Init()
+        {
+            StartPosition = FormStartPosition.CenterScreen;
+            DoubleBuffered = true;
+            bm = new Bitmap(width, height);
+            g = Graphics.FromImage(bm);
+            g.Clear(Color.White);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            picBox.Image = bm;
+            p.Width = (float)PaintBrushSize.Value;
+            p.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+            erase.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+        }
+        private void PickColor()
+        {
+            cd.ShowDialog();
+            new_color = cd.Color;
+            pic_color.BackColor = cd.Color;
+            p.Color = cd.Color;
+        }
     }
 }
