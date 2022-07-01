@@ -327,7 +327,7 @@ private void PickColor()
 ```        
         
 8.Event-от <b>PaintBrushSize_ValueChanged</b>
-Ни овозмува на промена на вредноста на <b>numericUpAndDown<b> да ја менуваме ширината на пенкалото и сите останати форми 
+Ни овозмува на промена на вредноста на <b>numericUpAndDown</b> да ја менуваме ширината на пенкалото и сите останати форми 
 
 ![image](https://user-images.githubusercontent.com/100298572/176909746-cc18b746-4e5d-4bfc-a95d-8c48b04fdaa4.png)
  
