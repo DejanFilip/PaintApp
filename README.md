@@ -17,13 +17,22 @@
 <b>Clear</b> за бришење на се што ќе се нацрта,<b>Save</b> за зачувување,додека <b>Open</b> за отварање на зачуваното од соодветниот фолдер на комјутерот.
 <li>Последното копче е за покажување на координатите при движење на маусот на pictureBox-ot.
 </ul>
+
 <h2>Опис на решавање на проблемот</h2>
- 1.<b>MouseMoveDown</b>,<b>MouseMoveUp</b> и <b>MouseMove</b> методите
-Прво го имаме event-от **MouseDown** кој регистрира дека сме почнале со цртанје и ја зема локацијата на напиот курсор во дадениот момент и X и Y оските.
-Потоа со event-от  **MouseUp**  со помош на нашиот flag кажуваме дека сме завршиле со цртанје односно нашиот маус не го држиме кликнат повеќе и во зависност од индексот се исцртува конкретната форма која може да биде елипса, правоаголник, права линија и триаголник.
-И event-от **MouseMove** кој цело време ја подесува локацијата на нашиот курсор во зависнот од тоа како го движиме и во десниот долен агол ни ја покажува точната локација според X и Y оските.
-Во овој метод соодветни исртувања се , пенкалото за слободно цртанје и гумата i **Refresh()** методата која е слична на **Invalidate()** ја повикуваме директно на платното
-кое цртаме
+1.<b>MouseMoveDown</b>,<b>MouseMoveUp</b> и <b>MouseMove</b> методите
+Прво го имаме event-от <b>MouseDown</b> кој регистрира дека сме почнале со цртање и ја зема локацијата на напиот курсор во дадениот момент и X и Y оските.
+Потоа со event-от  <b>MouseUp</b>  со помош на нашиот flag кажуваме дека сме завршиле со цртанје односно нашиот маус не го држиме кликнат повеќе и во зависност од индексот се исцртува конкретната форма која може да биде елипса, правоаголник, права линија и триаголник.
+
+![image](https://user-images.githubusercontent.com/100298572/176908953-679206c9-eedf-47d2-8a75-72b62b85d8ad.png)
+
+И event-от <b>MouseMove</b> кој цело време ја подесува локацијата на нашиот курсор во зависнот од тоа како го движиме и во десниот долен агол ни ја покажува точната локација според X и Y оските.
+
+![image](https://user-images.githubusercontent.com/100298572/176908785-7763c311-ea5d-4d71-ba55-227277d836aa.png)
+
+Во овој метод соодветни исртувања се , пенкалото за слободно цртанје и гумата i <b>Refresh()</b> методата која е слична на <b>Invalidate()</b> ја повикуваме директно на платното кое цртаме
+
+![image](https://user-images.githubusercontent.com/100298572/176908686-aa7fcbb2-1173-4102-8b15-72d5ec2d7e00.png)
+
 
 ```
         private void picBox_MouseDown(object sender, MouseEventArgs e)
@@ -96,6 +105,18 @@
 ```
 
 2.<b>Open</b>,<b>Save</b> и <b>Clear</b> методите
+На овие 3 копчиња ни се понудени различни функции:
+
+![image](https://user-images.githubusercontent.com/100298572/176908364-9e337d8f-9c4f-409d-bfdb-f81d8356d2ed.png)
+![image](https://user-images.githubusercontent.com/100298572/176908427-43209d90-1359-457e-9180-6012dac409cb.png)
+
+
+-Save ни овозможува зачувување на нашиот цртеж во локалната мажина на која цртаме и ги зачувува во jpg формат.
+
+-Open ни овозможува истата слика која сме ја зачувале да ја отвориме на платното и да можеме да продолжиме со цртање на истата.
+
+-Clear е она кое ни ја чисти целата површина доколку имаме потреба одново да почнеме со цртање на чисто платно.
+
 ```
  private void btn_save_Click(object sender, EventArgs e)
         {
@@ -131,6 +152,10 @@
         }
 ```
 3.<b>Paint</b> методот
+При исртување на формата според индексот, овој метод ни овозможува пред да го отпуштиме левиот клик на маусот да видиме колкава е големината на формата и откако ќе
+отпуштиме тогаш се исцртува.
+Тоа го извршуваме Graphics g варијаблата која ја повикуваме за исртување на секоја форма
+
 ```
 private void picBox_Paint(object sender, PaintEventArgs e)
         {
@@ -161,6 +186,12 @@ private void picBox_Paint(object sender, PaintEventArgs e)
 ```        
         
 4.<b>Fill</b> методот кој е и воедно најсложениот код во програмата
+FloodFill методата во неговите параметри ја прима битмапата на која цртаме,X и Y оската и бојата која ни е одбрана.
+Така што после во листа итерираме низ цела битмапа  или низ формата и со проверката на точката дали се наога во рамките на одредена форма или пак целата површина, 
+ја бои само тогаш целата внатрешност.Истата метода ја повикуваме со соодветниот индекс на копчето и евентот <b>picBox_MouseClick</b> .Оваа функција воедно беше и најтешката во самиот проект.
+
+![image](https://user-images.githubusercontent.com/100298572/176909156-aab37b2b-93da-4b46-ab1c-c2a662a0ebd3.png)
+
 ```
 void FloodFill(Bitmap bitmap, int x, int y, Color color)
         {
@@ -205,8 +236,23 @@ void FloodFill(Bitmap bitmap, int x, int y, Color color)
             Marshal.Copy(bits, 0, data.Scan0, bits.Length);
             bitmap.UnlockBits(data);
         }
+        
+          private void picBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (index == 7)
+            {
+                FloodFill(bm, e.X, e.Y, new_color);
+                Invalidate();
+
+            }
+        }
 ```
+
 5.<b>Triangle</b> методот
+Методата <b>DrawTriangle(Graphics g)</b> беше наша идеа и предизвик бидејќи таа не постои во библиотеката <b>System.Drawing</b> па така што успеавме на наш начин
+со помош на готовата <b>DrawLine()</b> функција да исцртаме 3 прави линии кои прават триаголник.Исто така после се повикува со соодветен индекс на копчето за да може
+да ја исцртаме.
+
 ```
  private void DrawTriangle(Graphics g)
         {
@@ -220,7 +266,16 @@ void FloodFill(Bitmap bitmap, int x, int y, Color color)
         }
 ```
 6.<b>Init()</b> методот
+<b>Init()</b> е обична функција каде ни се поставени потребните функционалности кои треба да ги имаме на самото стартување на програмата и ја повикуваме истата
+во самиот конструктор на иницијализација на формата.
+ 
 ```
+  public Paint()
+        {
+            InitializeComponent();
+            Init();
+        }
+ 
 private void Init()
         {
             StartPosition = FormStartPosition.CenterScreen;
@@ -236,7 +291,32 @@ private void Init()
         }
 ```        
 7.Методот за бирање боја <b>PickColor()</b> 
+
+<b>PickColor()</b> е функција која ја повикуваме на 2 места.Тоа е на самото копче Color
+ 
+![image](https://user-images.githubusercontent.com/100298572/176907173-df13afa3-43b9-4209-8279-47d5648f87f9.png)
+ 
+а додадена е и бонус опција да менуваме боја и на местото каде што ја прикажуваме тековната боја која ни е одбрана , која се наоѓа одма до копчето Color
+
+![image](https://user-images.githubusercontent.com/100298572/176907618-e2d94e77-4ccf-49a0-972d-43f1d8f48dd7.png)
+
+И со оваа фукнција која може да ја активираме на овие 2 места, ја добиваме палетата за бирање на боја
+
+![image](https://user-images.githubusercontent.com/100298572/176907807-840e9d7b-0e93-4945-a3ea-61ded454a619.png)
+
+
+
 ```
+ private void pic_color_Click(object sender, EventArgs e)
+        {
+            PickColor();
+        }
+
+        private void btn_color_Click(object sender, EventArgs e)
+        {
+            PickColor();
+        }
+ 
 private void PickColor()
         {
             cd.ShowDialog();
@@ -246,19 +326,14 @@ private void PickColor()
         }
 ```        
         
-    
-        
+8.Event-от <b>PaintBrushSize_ValueChanged</b>
+Ни овозмува на промена на вредноста на <b>numericUpAndDown<b> да ја менуваме ширината на пенкалото и сите останати форми 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+![image](https://user-images.githubusercontent.com/100298572/176909746-cc18b746-4e5d-4bfc-a95d-8c48b04fdaa4.png)
+ 
+```
+private void PaintBrushSize_ValueChanged(object sender, EventArgs e)
+        {
+            p.Width = (float)PaintBrushSize.Value;
+        }
+```
